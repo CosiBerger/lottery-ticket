@@ -1,13 +1,20 @@
 import React from "react";
-import update from "react-addons-update";
 import "./LotteryTicket.css";
 import Utils from "./Utils.js";
 
 class LotteryTicket extends React.Component {
+  numberOfFields = 54;
+  numberOfMaxSelectedFields = 7;
+  GRID = [0, 1, 2, 3, 4, 5, 6, 7];
+
+  /**
+   * Constructor
+   * @param {} props
+   */
   constructor(props) {
     super(props);
     this.state = {
-      fields: Array(49).fill(false),
+      fields: Array(this.numberOfFields).fill(false),
       showForwardButton: false,
       showSelectedNumbers: false
     };
@@ -25,7 +32,7 @@ class LotteryTicket extends React.Component {
     if (fields[index] === true) {
       fields[index] = false;
       numberOfSelectedFields -= 1;
-    } else if (numberOfSelectedFields < 6) {
+    } else if (numberOfSelectedFields < this.numberOfMaxSelectedFields) {
       fields[index] = true;
       numberOfSelectedFields += 1;
     }
@@ -38,8 +45,7 @@ class LotteryTicket extends React.Component {
    * Setzt alle States des LotteryTickets zurueck auf die default Werte
    */
   unselectFields(callback) {
-    console.log(callback);
-    const fields = Array(49).fill(false);
+    const fields = Array(this.numberOfFields).fill(false);
     this.setState(
       { fields, showForwardButton: false, showSelectedNumbers: false },
       callback
@@ -65,7 +71,7 @@ class LotteryTicket extends React.Component {
     const fields = this.state.fields;
     const randomNumbers = Utils.getRandomNumbers(
       this.state.fields,
-      6 - this.getNumberOfSelectedFields()
+      this.numberOfMaxSelectedFields - this.getNumberOfSelectedFields()
     );
     randomNumbers.map(number => {
       fields[number] = true;
@@ -79,7 +85,7 @@ class LotteryTicket extends React.Component {
    * Wenn bereits zuvor eine Zahl ausgewaehlt war, bleibt diese erhalten
    */
   displayQuickTipps() {
-    if (this.getNumberOfSelectedFields() === 6) {
+    if (this.getNumberOfSelectedFields() === this.numberOfMaxSelectedFields) {
       this.unselectFields(() => {
         this.displayRandomNumber();
       });
@@ -100,22 +106,21 @@ class LotteryTicket extends React.Component {
    * Rendert das gesamte LotteryTicket
    */
   render() {
-    const fields = [0, 1, 2, 3, 4, 5, 6];
     const selectionFinished =
-      this.getNumberOfSelectedFields() === 6 ? "show button" : "hide";
+      this.getNumberOfSelectedFields() === this.numberOfMaxSelectedFields
+        ? "show button"
+        : "hide";
     return (
       <div>
         <h1>Lotto - 6 aus 49</h1>
         <div className="lottoTicket">
           {/* Alle Spalten iterieren*/}
-          {fields.map(row => (
+          {this.GRID.map(row => (
             <div key={row} className="ticket-row">
               {/* Alle Zeilen iterieren*/}
-              {fields.map(columns => {
-                const fieldIndex = row * 7 + columns;
-                {
-                  /* Feld mit der berechneten Nummer erstellen*/
-                }
+              {this.GRID.map(columns => {
+                const fieldIndex = row * this.GRID.length + columns;
+                /* Feld mit der berechneten Nummer erstellen*/
                 return (
                   <Field
                     key={fieldIndex}
@@ -150,7 +155,7 @@ class LotteryTicket extends React.Component {
         {/* Anzeige der 6 ausgewaehlten Felder*/}
         <h2>
           {this.state.showSelectedNumbers &&
-          this.getNumberOfSelectedFields() === 6
+          this.getNumberOfSelectedFields() === this.numberOfMaxSelectedFields
             ? Utils.getSelectedFields(this.state.fields)
             : ""}
         </h2>
@@ -171,12 +176,12 @@ class LotteryTicket extends React.Component {
  *                  number -> Die Zahl, die im Feld dargestellt wird
  *                  onCLick -> Klick Handler
  */
-function Field(props) {
-  const selectedClass = props.selected ? " field selected-field" : "field";
+function Field({ selected, number, onClick }) {
+  const selectedClass = selected ? " field selected-field" : "field";
 
   return (
-    <button className={selectedClass} onClick={props.onClick}>
-      {props.number}
+    <button className={selectedClass} onClick={onClick}>
+      {number}
     </button>
   );
 }
