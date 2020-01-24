@@ -1,18 +1,13 @@
 import React from "react";
-import LotteryTicket from "./LotteryTicket";
-
-const lotteryTicket = new LotteryTicket();
-
-// beforeEach(() => {
-//   const fields = Array(49).fill(false);
-// });
+import Utils from "./Utils.js";
 
 /**
  * Prueft, ob der generierte Array mit den zufaelligen Zahlen auch die
  * richtige laenge hat
  */
 test("RandomNumber Array has correct length", () => {
-  const randomNumberArray = lotteryTicket.getRandomNumbers(6);
+  const fields = Array(49).fill(false);
+  const randomNumberArray = Utils.getRandomNumbers(fields, 6);
   expect(randomNumberArray.length).toEqual(6);
 });
 
@@ -22,7 +17,7 @@ test("RandomNumber Array has correct length", () => {
  */
 test("No field selected", () => {
   const fields = Array(49).fill(false);
-  const selectedFields = lotteryTicket.getSelectedFields(fields);
+  const selectedFields = Utils.getSelectedFields(fields);
   expect(selectedFields).toEqual("");
 });
 
@@ -33,8 +28,8 @@ test("No field selected", () => {
 test("Returns correct selected Fields", () => {
   const fields = getSixSelectedFields();
 
-  const selectedFields = lotteryTicket.getSelectedFields(fields);
-  expect(selectedFields).toEqual("6, 8, 23, 29, 36, 42");
+  const selectedFields = Utils.getSelectedFields(fields);
+  expect(selectedFields).toEqual("6,8,23,29,36,42");
 });
 
 /**
@@ -44,8 +39,8 @@ test("Returns correct selected Fields", () => {
 test("Does not return array index as selected Field number", () => {
   const fields = getSixSelectedFields();
 
-  const selectedFields = lotteryTicket.getSelectedFields(fields);
-  expect(selectedFields).not.toBe("5, 7, 22, 28, 35, 41");
+  const selectedFields = Utils.getSelectedFields(fields);
+  expect(selectedFields).not.toBe("5,7,22,28,35,41");
 });
 
 /**
@@ -55,8 +50,8 @@ test("Does not return array index as selected Field number", () => {
 test("Returns correct Selected Fields for five fields", () => {
   const fields = getFiveSelectedFields();
 
-  const selectedFields = lotteryTicket.getSelectedFields(fields);
-  expect(selectedFields).toEqual("6, 8, 23, 29, 36, ");
+  const selectedFields = Utils.getSelectedFields(fields);
+  expect(selectedFields).toEqual("6,8,23,29,36");
 });
 
 /**
