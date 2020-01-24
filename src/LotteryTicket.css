@@ -3,18 +3,14 @@ body {
   margin: 20px;
 }
 
-ol, ul {
+ol,
+ul {
   padding-left: 30px;
 }
 
-.ticket-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
-.status {
-  margin-bottom: 10px;
+h1,
+h2 {
+  color: #d68400;
 }
 
 .field {
@@ -25,58 +21,82 @@ ol, ul {
   font-weight: bold;
   line-height: 50px;
   height: 50px;
-  margin-right: -1px;
-  margin-top: -1px;
+  margin: 2px;
   padding: 0;
   text-align: center;
   width: 50px;
-  cursor:pointer;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
-.field:focus {
+.field:focus,
+button:focus {
   outline: none;
 }
 
-.selected-field{
+.selected-field {
   background-image: url(./x-icon.svg);
   background-size: 50px;
   background-repeat: no-repeat;
 }
 
-.trash{
+.trash {
   background-image: url(./trash-icon.svg);
-  background-size: 50px;
-  width:50px;
-  height:50px;
+  background-size: 40px;
+  width: 40px;
+  height: 40px;
   background-repeat: no-repeat;
-  cursor:pointer;
-  float:left;
+  cursor: pointer;
+  float: left;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
-.show{
-  display:block;
+.show {
+  display: block;
 }
 
-.button{
- 
-    color: #494949 !important;
-    text-transform: uppercase;
-    text-decoration: none;
-    background: #ffffff;
-    padding: 10px;
-    border: 4px solid #494949 !important;
-    display: block;
-    transition: all 0.4s ease 0s;
-    float: left;
-    margin-top:2px
-    
+.floatRight {
+  float: right;
 }
 
-.button:hover{
+.floatLeft {
+  float: left;
+}
+
+.clearLeft {
+  clear: left;
+}
+
+.clearBoth {
+  clear: both;
+}
+
+.lottoTicket {
+  float: left;
+  margin-right: 10px;
+}
+
+.button {
+  color: #494949 !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: #ffffff;
+  padding: 10px;
+  border: 4px solid #494949 !important;
+  display: block;
+  transition: all 0.4s ease 0s;
+  margin: 2px;
+  min-height: 50px;
+  min-width: 100px;
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.button:hover,
+.field:hover {
   color: #ffffff !important;
   background: #d68400;
   border-color: #d68400 !important;
@@ -84,7 +104,7 @@ ol, ul {
   outline: none;
 }
 
-.result{
+.result {
   line-height: 50px;
   font-size: 20px;
 }
