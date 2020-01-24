@@ -37,15 +37,16 @@ class Utils {
    */
   getRandomNumbers(fields, count) {
     const array = Array(count).fill();
+    const numberOfFields = fields.length;
 
     array.map((i, index) => {
-      let randomNumber = Math.floor(Math.random() * 49);
+      let randomNumber = Math.floor(Math.random() * numberOfFields);
 
       while (
         this.isAlreadInArray(array, randomNumber) ||
         fields[randomNumber] === true
       ) {
-        randomNumber = Math.floor(Math.random() * 49);
+        randomNumber = Math.floor(Math.random() * numberOfFields);
       }
       array[index] = randomNumber;
     });
